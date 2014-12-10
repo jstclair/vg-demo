@@ -1,0 +1,23 @@
+{
+  "name": "vg-demo",
+  "version": "0.0.0",
+  "authors": [
+    "John St. Clair <stclairjohn@gmail.com>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "~3.2.0",
+    "knockout-virtual-grid": "file:///Users/john/repos/knockout-virtual-grid/.git/"
+  }
+}
