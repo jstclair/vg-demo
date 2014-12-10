@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+        <script type="text/javascript" src="bower_components/requirejs/require.js"></script>
+
+        <style type="text/css" src="bower_components/bootstrap/dist/bootstrap.min.css"></style>
+    </head>
+<body>
+    <h1>Virtual Grid demo</h1>
+
+    <virtual-grid params="dataSource: dataSource"></virtual-grid>
+
+    <hr />
+
+    <script type="text/javascript">
+    requirejs.config({
+        paths: {
+            "text": "bower_components/requirejs-text/text",
+            "knockout": "bower_components/knockout/dist/knockout.debug",
+            "virtualgrid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid"
+        },
+        shim: {
+            "virtualgrid": { deps: ['knockout'] }
+        }
+    });
+
+    require(["knockout", "virtualgrid"], function(ko, virtualgrid){
+            function VM() {
+                this.dataSource = ko.observableArray([{
+                    css: ['my-row'],
+                    columns: [{
+                            css: ['my-col'],
+                            value: 1
+                        },
+                        {
+                            css: ['my-col'],
+                            value: 2
+                        }]
+                }]);
+            }
+
+            ko.components.register('virtual-grid', {
+                viewModel: { require: 'virtualgrid' },
+                template: { require: 'text!bower_components/knockout-virtual-grid/out/knockout-virtual-grid.html' }
+            });
+
+            var vm  = new VM(ko);
+            ko.applyBindings(vm);
+    });
+    </script>
+</body>
+</html>

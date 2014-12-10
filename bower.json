@@ -18,6 +18,10 @@
   ],
   "dependencies": {
     "knockout": "~3.2.0",
-    "knockout-virtual-grid": "file:///Users/john/repos/knockout-virtual-grid/.git/"
+    "knockout-virtual-grid": "file:///Users/john/repos/knockout-virtual-grid/.git/",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.1",
+    "requirejs": "~2.1.15",
+    "requirejs-text": "~2.0.12"
   }
 }
