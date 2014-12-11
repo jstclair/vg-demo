@@ -8,5 +8,9 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^1.7.2",
+    "gulp": "^3.8.10"
+  }
 }

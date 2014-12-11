@@ -31,16 +31,10 @@ git clone https://github.com/jstclair/vg-demo.git
 cd vg-demo
 npm install
 bower install
-gulp
 ```
 
-* (Temporary) Start a web server
+* Build and view the site
 
 ```shell
-http-server ./
+gulp
 ```
-
-* Open a browser and navigate to: http://localhost:8080
-
-> NOTE: I'll be switching over to browser-sync soon, so the above 2 steps won't be
-> necessary
