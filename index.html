@@ -63,7 +63,7 @@
 
     require(["knockout", "virtualgrid", "lodash"], function(ko, virtualgrid, _){
             function VM() {
-                var columns = _(_.range(30))
+                var columns = _(_.range(300))
                     .map(function(v, i) {
                         return {
                             css: ['my-col'],
@@ -71,7 +71,7 @@
                         };
                     });
 
-                var rows = _(_.range(10))
+                var rows = _(_.range(100))
                     .map(function(v, i) {
                         return {
                             css: ['my-row'],
