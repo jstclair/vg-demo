@@ -1,20 +1,13 @@
 {
   "name": "vg-demo",
-  "version": "0.0.0",
-  "authors": [
-    "John St. Clair <stclairjohn@gmail.com>"
-  ],
-  "moduleType": [
-    "amd"
-  ],
-  "license": "MIT",
   "private": true,
   "dependencies": {
     "knockout": "~3.2.0",
-    "knockout-virtual-grid": "file:///../knockout-virtual-grid/.git/",
+    "knockout-virtual-grid": "~0.0.4",
     "jquery": "~2.1.1",
     "bootstrap": "~3.3.1",
     "requirejs": "~2.1.15",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "knockout-editable-cell": "~2.1.1"
   }
 }

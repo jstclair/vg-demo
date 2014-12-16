@@ -73,10 +73,12 @@
             "text": "bower_components/requirejs-text/text",
             "knockout": "bower_components/knockout/dist/knockout.debug",
             "lodash": "bower_components/lodash/dist/lodash.min",
+            "editableCell": "bower_components/knockout-editable-cell/out/editableCell",
             "virtualgrid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid"
         },
         shim: {
-            "virtualgrid": { deps: ['knockout'] }
+            "editableCell": { deps: ['knockout'] },
+            "virtualgrid": { deps: ['knockout', 'editableCell'] }
         }
     });
 
