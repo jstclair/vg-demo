@@ -37,13 +37,32 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="starter-template">
-            <h1>Virtual Grid Demo </h1>
-            <virtual-grid params="dataSource: dataSource"></virtual-grid>
+    <div class="starter-template">
+        <h1>Virtual Grid Demo </h1>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group" role="group">
+                <div class="btn btn-default" data-bind="click: first">First</div>
+                <div class="btn btn-default" data-bind="click: prevTen">Prev (10)</div>
+                <div class="btn btn-default" data-bind="click: prev">Prev</div>
+                <div class="btn btn-default" data-bind="click: next">Next</div>
+                <div class="btn btn-default" data-bind="click: nextTen">Next (10)</div>
+                <div class="btn btn-default" data-bind="click: last">Last</div>
+            </div>
+            <div class="btn-group" role="group">
+                <div class="btn btn-default" data-bind="click: top">Top</div>
+                <div class="btn btn-default" data-bind="click: upTen">Up (10)</div>
+                <div class="btn btn-default" data-bind="click: up">Up</div>
+                <div class="btn btn-default" data-bind="click: down">Down</div>
+                <div class="btn btn-default" data-bind="click: downTen">Down (10)</div>
+                <div class="btn btn-default" data-bind="click: bottom">Bottom</div>
+            </div>
+            <div class="btn-group" role="group">
+                <div class="btn btn-default" data-bind="click: addRow">Add Row</div>
+            </div>
         </div>
-
-    </div><!-- /.container -->
+        <p></p>
+        <virtual-grid params="dataSource: dataSource, css: 'table table-striped table-hovered table-bordered table-condensed', offset: offset"></virtual-grid>
+    </div>
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -63,24 +82,98 @@
 
     require(["knockout", "virtualgrid", "lodash"], function(ko, virtualgrid, _){
             function VM() {
-                var columns = _(_.range(300))
-                    .map(function(v, i) {
-                        return {
-                            css: ['my-col'],
-                            value: i
-                        };
-                    });
-
-                var rows = _(_.range(100))
-                    .map(function(v, i) {
-                        return {
-                            css: ['my-row'],
-                            columns: columns.value()
-                        };
-                    }).value();
-
-                this.dataSource = ko.observableArray(rows);
+                this.columns = 300;
+                this.rows = 100;
+                this.offset = {
+                    row: ko.observable(0),
+                    column: ko.observable(0)
+                };
+                this.dataSource = ko.observableArray([]);
             }
+
+            VM.prototype.init = function() {
+                var data = this.getRows();
+                this.dataSource(data);
+            };
+            VM.prototype.getRows = function() {
+                var self = this,
+                    range = _.range(self.rows);
+                return _(range)
+                    .map(function(v, i) { return self.getRow(v, i); })
+                    .value();
+            };
+            VM.prototype.getColumns = function(start) {
+                var self = this,
+                    range = _.range(self.columns);
+                return _(range)
+                    .map(function(v, i) { return self.getColumn(v, i + start); })
+                    .value();
+            };
+            VM.prototype.getRow = function(v, i) {
+                return {
+                    css: ['my-row'],
+                    columns: this.getColumns(i),
+                };
+            };
+            VM.prototype.getColumn = function(v, i) {
+                return {
+                    css: ['my-col'],
+                    value: i
+                };
+            };
+            VM.prototype.first = function() {
+                this.offset.column(0);
+            };
+            VM.prototype.prev = function() {
+                var val = Math.max(this.offset.column() - 1, 0);
+                this.offset.column(val);
+            };
+            VM.prototype.prevTen= function() {
+                var val = Math.max(this.offset.column() - 10, 0);
+                this.offset.column(val);
+            };
+            VM.prototype.next = function() {
+                var val = Math.min(this.offset.column() + 1, this.columns);
+                this.offset.column(val);
+            };
+            VM.prototype.nextTen = function() {
+                var val = Math.min(this.offset.column() + 10, this.columns);
+                this.offset.column(val);
+            };
+            VM.prototype.last = function() {
+                // hard-code 35 columns for demo
+                this.offset.column(this.columns - 35);
+            };
+            VM.prototype.top = function() {
+                this.offset.row(0);
+            };
+            VM.prototype.up = function() {
+                var val = Math.max(this.offset.row() - 1, 0);
+                this.offset.row(val);
+            };
+            VM.prototype.upTen = function() {
+                var val = Math.max(this.offset.row() - 10, 0);
+                this.offset.row(val);
+            };
+            VM.prototype.down = function() {
+                var val = Math.min(this.offset.row() + 1, this.rows);
+                this.offset.row(val);
+            };
+            VM.prototype.downTen = function() {
+                var val = this.offset.row(),
+                    next = val + 10,
+                    min = Math.min(next, this.rows);
+                console.log('DownTen: %d', min);
+                this.offset.row(min);
+            };
+            VM.prototype.bottom = function() {
+                // hard code 25 rows for demo
+                this.offset.row(this.rows - 25);
+            };
+            VM.prototype.addRow = function() {
+                this.dataSource.push(this.getRow(1, this.rows));
+                this.rows += 1;
+            };
 
             ko.components.register('virtual-grid', {
                 viewModel: { require: 'virtualgrid' },
@@ -88,6 +181,7 @@
             });
 
             var vm  = new VM(ko);
+            vm.init();
             ko.applyBindings(vm);
     });
     </script>
