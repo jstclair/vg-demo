@@ -2,26 +2,7 @@
 
 This is a sample page for working with [knockout-virtual-grid](https://github.com/jstclair/knockout-virtual-grid)
 
-At the moment, it assumes you've checked out both projects into the same folder.
-
-> Later, once the knockout-virtual-grid is published (via bower/npm),
-> this restriction will be removed
-
-_In the steps below, I'm assuming you're going to be working from a common
-folder, like: ~/repos_
-
 ### Instructions
-
-* Clone the [knockout-virtual-grid](https://github.com/jstclair/knockout-virtual-grid) repository, and prepare it
-
-```shell
-cd ~/repos
-git clone https://github.com/jstclair/knockout-virtual-grid.git
-cd knockout-virtual-grid
-npm install
-bower install
-gulp dist
-```
 
 * Clone this repository, and prepare it
 
@@ -33,8 +14,17 @@ npm install
 bower install
 ```
 
-* Build and view the site
+* Build it, and view the site
 
 ```shell
 gulp
 ```
+
+> NOTE: gulp (via browser-sync) will automatically start a web server to serve
+> the site, and open your default browser
+
+### EditableCell
+
+Knockout Virtual Grid uses [editableCell](https://github.com/gnab/editableCell)
+for navigation and editing; see the README or demo page for more information on
+shortcut keys.
