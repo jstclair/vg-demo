@@ -2,6 +2,12 @@
 
 This is a sample page for working with [knockout-virtual-grid](https://github.com/jstclair/knockout-virtual-grid)
 
+The initial page contains 100 rows, each containing 300 columns of data. On my
+machine, in Chrome (Version 40.0.2214.38 beta (64-bit)), it uses approximately
+125 MB. In Safari (Version 8.0.2 (10600.2.5)), it uses approximately 97 MB.
+
+
+
 ### Instructions
 
 * Clone this repository, and prepare it
