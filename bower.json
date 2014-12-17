@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "knockout": "~3.2.0",
-    "knockout-virtual-grid": "~0.0.4",
+    "knockout-virtual-grid": "~0.0.5",
     "jquery": "~2.1.1",
     "bootstrap": "~3.3.1",
     "requirejs": "~2.1.15",

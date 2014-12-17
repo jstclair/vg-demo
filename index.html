@@ -4,7 +4,7 @@
         <title>VG Demo</title>
 
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="bower_components/knockout-virtual-grid/out/knockout-virtual-grid.css" rel="stylesheet" />
+        <link href="bower_components/knockout-virtual-grid/out/knockout-virtual-grid.min.css" rel="stylesheet" />
         <style>
             body {
                 padding-top: 50px;
@@ -38,7 +38,8 @@
     </nav>
 
     <div class="starter-template">
-        <h1>Virtual Grid Demo </h1>
+        <h1>Virtual Grid Demo</h1>
+        <div class="pull-right" data-bind="text: '(' + columns + ' columns x ' + rows + ' rows)'"></div>
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group" role="group">
                 <div class="btn btn-default" data-bind="click: first">First</div>
@@ -73,19 +74,19 @@
             "text": "bower_components/requirejs-text/text",
             "knockout": "bower_components/knockout/dist/knockout.debug",
             "lodash": "bower_components/lodash/dist/lodash.min",
-            "editableCell": "bower_components/knockout-editable-cell/out/editableCell",
-            "virtualgrid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid"
+            "editableCell": "bower_components/knockout-editable-cell/out/editableCell.min",
+            "src/knockout-virtual-grid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid.min"
         },
         shim: {
             "editableCell": { deps: ['knockout'] },
-            "virtualgrid": { deps: ['knockout', 'editableCell'] }
+            "src/knockout-virtual-grid": { deps: ['knockout', 'editableCell'] }
         }
     });
 
-    require(["knockout", "virtualgrid", "lodash"], function(ko, virtualgrid, _){
+    require(["knockout", "lodash", "editableCell"], function(ko, _, ec){
             function VM() {
-                this.columns = 300;
-                this.rows = 100;
+                this.columns = 500;
+                this.rows = 75;
                 this.offset = {
                     row: ko.observable(0),
                     column: ko.observable(0)
@@ -178,8 +179,7 @@
             };
 
             ko.components.register('virtual-grid', {
-                viewModel: { require: 'virtualgrid' },
-                template: { require: 'text!bower_components/knockout-virtual-grid/out/knockout-virtual-grid.html' }
+                require: 'src/knockout-virtual-grid'
             });
 
             var vm  = new VM(ko);
