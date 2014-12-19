@@ -13,6 +13,36 @@
                 padding: 40px 15px;
                 text-align: center;
             }
+
+            .changed {
+                -webkit-animation-duration: 2s;
+                -webkit-animation-name: flash;
+            }
+
+            .error {
+                -webkit-animation-duration: 2s;
+                -webkit-animation-name: flash-error;
+            }
+
+            @-webkit-keyframes flash {
+                from {
+                    background-color: yellow;
+                }
+
+                to {
+                    background-color: white;
+                }
+            }
+
+            @-webkit-keyframes flash-error {
+                from {
+                    background-color: red;
+                }
+
+                to {
+                    background-color: white;
+                }
+            }
         </style>
     </head>
 <body>
@@ -62,7 +92,7 @@
             </div>
         </div>
         <p></p>
-        <virtual-grid params="dataSource: dataSource, css: 'table table-striped table-hovered table-bordered table-condensed', offset: offset"></virtual-grid>
+        <virtual-grid params="dataSource: dataSource, onEdit: onEdit, onAfterEdit: onAfterEdit, css: 'table table-striped table-hovered table-bordered table-condensed', offset: offset"></virtual-grid>
     </div>
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
@@ -74,8 +104,8 @@
             "text": "bower_components/requirejs-text/text",
             "knockout": "bower_components/knockout/dist/knockout.debug",
             "lodash": "bower_components/lodash/dist/lodash.min",
-            "editableCell": "bower_components/knockout-editable-cell/out/editableCell.min",
-            "src/knockout-virtual-grid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid.min"
+            "editableCell": "bower_components/knockout-editable-cell/out/editableCell",
+            "src/knockout-virtual-grid": "bower_components/knockout-virtual-grid/out/knockout-virtual-grid"
         },
         shim: {
             "editableCell": { deps: ['knockout'] },
@@ -176,6 +206,27 @@
             VM.prototype.addRow = function() {
                 this.dataSource.push(this.getRow(1, this.rows));
                 this.rows += 1;
+            };
+            VM.prototype.onEdit = function(value, args) {
+                console.log('[VG-DEMO] %o', arguments);
+                var v = parseInt(value, 10);
+                if (isNaN(v)) return false;
+                if (!args) return false;
+
+                this.dataSource()[args.rowIndex].columns[args.columnIndex].value = v;
+                this.dataSource.valueHasMutated();
+
+                return true;
+            };
+            VM.prototype.onAfterEdit = function(value, info, cell) {
+                console.log('[VG-DEMO] %o', value);
+                if (!value || !cell) return;
+
+                var $c = $(cell),
+                    klass = value.didEdit ? 'changed' : 'error';
+
+                $c.addClass(klass)
+                  .one('webkitAnimationEnd', function() { $(this).removeClass(klass); });
             };
 
             ko.components.register('virtual-grid', {
